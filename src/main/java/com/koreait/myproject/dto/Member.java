@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Member {
-	private long mNo;
+	private long mno;
 	private String id;
 	private String pw;
 	private String name;
@@ -18,6 +18,6 @@ public class Member {
 	private String email;
 	private String address;
 	private Date regdate;
-	private String mState;
+	private int State;
 	
 }

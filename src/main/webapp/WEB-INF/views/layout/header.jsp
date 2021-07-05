@@ -81,7 +81,19 @@
     .nav a:hover{
        background-color: #eed538;
     }
+    #logout:hover{
+    	cursor: pointer;
+    }
 </style>
+<script>
+	$(document).ready(function(){
+		$('#logout').click(function(){		
+			if(confirm('로그아웃하시겠습니까?')){
+				location.href='logout.do';
+			}
+		});
+	});
+</script>
 <body>
 <div class="indexContainer">
 	<header>
@@ -99,8 +111,8 @@
 			</c:if>
 			<c:if test="${loginUser != null}">
 				<p>${loginUser.name}님 반갑습니다</p>
-				<a href="logout.do">로그아웃</a> |
-				<a href="myPage.do">마이페이지</a>	
+				<a id="logout">로그아웃</a> |
+				<a href="accountWithdrawPage.do">회원탈퇴</a>	
 			</c:if>
 		</div>
 	<nav>

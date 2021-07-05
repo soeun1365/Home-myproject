@@ -9,5 +9,7 @@ public interface MyProjectDAO {
 	public Member login(Member member);
 	public String showIdByEmail(String email);
 	public String showIdByNamePhone(Member member);
+	public int verifyEmail(String email);
 	public int updatePw(Member member);
+	public int accountWithdraw(long mno);
 }

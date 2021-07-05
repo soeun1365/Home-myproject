@@ -3,6 +3,7 @@ package com.koreait.myproject.command;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ public class JoinCommand {
 		
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
+		HttpServletResponse response = (HttpServletResponse)map.get("response");
 		
 		// join.jsp에서 받아온 값들
 		String id = request.getParameter("id");
@@ -39,7 +41,24 @@ public class JoinCommand {
 		
 		//DAO에서 실행
 		MyProjectDAO myProjectDAO = sqlSession.getMapper(MyProjectDAO.class);
-		myProjectDAO.join(member);
+		int count = myProjectDAO.join(member);
+		
+		response.setContentType("text/html; charset=utf-8"); 
+		try {
+			if(count > 0) {
+				response.getWriter().println("<script>");
+				response.getWriter().println("alert('회원가입이 완료되었습니다.')");
+				response.getWriter().println("location.href='index.do'");
+				response.getWriter().println("</script>");
+			} else if(count == 0){
+				response.getWriter().println("<script>");
+				response.getWriter().println("alert('회원가입에 실패하였습니다.')");
+				response.getWriter().println("history.back()");
+				response.getWriter().println("</script>");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

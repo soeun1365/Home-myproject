@@ -16,7 +16,21 @@
 			if($('#email').val() == ''){
 				alert('이메일을 입력해주세요.');
 				return false;
-			} else{
+			//탈퇴한 회원의 email인지 확인하기
+			} else if($('#email').val() != ''){
+				$.ajax({
+					url: 'verifyEmail.do',
+					type: 'get',
+					data: 'email=' + $('#email').val(),
+					dataType: 'json',
+					success: function(resultMap){
+						if(resultMap.state == 1){
+							alert('탈퇴한 회원입니다.');
+							return false;
+						}
+					}
+				});
+			}else{
 				$.ajax({
 					url: 'verifyNum.do',
 					type: 'get',

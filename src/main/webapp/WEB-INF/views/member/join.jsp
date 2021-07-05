@@ -69,8 +69,8 @@
 				$('#id').focus();
 				idPass = false;
 			} else{
-				$('#idCheck').text('아이디가 입력되었습니다.').css('color','green');
-				$('#id').focus();
+				$('#idCheck').text('');
+				$('.far fa-check-circle').css('visibility','visible');
 				idPass = true;
 			}
 		});
@@ -79,6 +79,11 @@
 	var idUnique = false;
 	function idUniqueCheck(){
 		$('#id_btn').click(function(){
+			if($('#id').val() == ''){
+				alert('아이디를 입력해주세요.');
+				$('#id_i').html('<i>').css('color','#b1c254');
+				return false;
+			}
 			$.ajax({
 				url: 'idCheck.do',
 				type: 'get',
@@ -91,6 +96,7 @@
 					}else{
 						alert('가입가능한 아이디 입니다.');
 						idUnique = true;
+						$('#id_i').html('<i class="far fa-check-circle"></i>').css('color','#b1c254');
 					}
 				},
 				error : function(){
@@ -106,9 +112,11 @@
 			var regPW = /^(?=.*[A-Z])(?=.*[~!@#$%^&*])[A-Za-z0-9~!@#$%^&*]{4,8}$/;
 			if(!regPW.test($('#pw1').val())){
 				$('#pw1Check').text('비밀번호는 대문자와 특수문자를 포함한 4~8자리 이어야합니다.').css('color', 'red');
+				$('#pw_i').html('<i>');
 				pwPass = false;
 			}else{
-				$('#pw1Check').text('사용가능한 비밀번호 입니다.').css('color', 'green');
+				$('#pw1Check').text('');
+				$('#pw_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254;');
 				pwPass = true;
 			}
 		});
@@ -120,9 +128,11 @@
 		$('#pw2').keyup(function(){
 			if( $('#pw1').val() != $('#pw2').val()){
 				$('#pw2Check').text('비밀번호 재확인이 필요합니다.').css('color', 'red');
+				$('#pw2_i').html('<i></i>');
 				pw2Pass = false;
 			}else{
-				$('#pw2Check').text('비밀번호가 재확인 되었습니다.').css('color', 'green');
+				$('#pw2Check').text('');
+				$('#pw2_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 				pw2Pass = true;
 			}
 		});
@@ -134,10 +144,12 @@
 		$('#name').keyup(function(){
 			var regName = /^[가-힣a-zA-Z]{2,5}$/;
 			if(!regName.test($('#name').val())){
-				$('#nameCheck').text('이름을 확인해주세요.').css('color', 'red');
+				$('#nameCheck').text('이름을 확인해주세요.');
+				$('#name_i').html('<i></i>');
 				namePass = false;
 			}else{
-				$('#nameCheck').text('이름이 입력되었습니다.').css('color', 'green');
+				$('#nameCheck').text('');
+				$('#name_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 				namePass = true;
 			}
 		});
@@ -152,27 +164,31 @@
 			if(!regPhone2.test($('#phone2').val()) || !regPhone3.test($('#phone3').val())){
 				phonePass = false;
 				$('#phoneCheck').text('전화번호를 확인해주세요').css('color', 'red');
+				$('#phone_i').html('<i></i>');
 			}else if(regPhone2.test($('#phone2').val()) && regPhone3.test($('#phone3').val())){
 				phonePass = true;
-				$('#phoneCheck').text('전화번호가 입력되었습니다.').css('color', 'green');
+				$('#phoneCheck').text('');
+				$('#phone_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 			}
 		});
 		$('#phone3').keyup(function(){
 			if(!regPhone2.test($('#phone2').val()) || !regPhone3.test($('#phone3').val())){
 				phonePass = false;
 				$('#phoneCheck').text('전화번호를 확인해주세요').css('color', 'red');
+				$('#phone_i').html('<i></i>');
 			}else if(regPhone2.test($('#phone2').val()) && regPhone3.test($('#phone3').val())){
 				phonePass = true;
-				$('#phoneCheck').text('전화번호가 입력되었습니다.').css('color', 'green');
+				$('#phoneCheck').text('');
+				$('#phone_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 			}
 		});
 	}
 	
 	//이메일확인
 	var emailPass = false;
+	var regEmail = /^[a-z0-9][a-z0-9_-]*@[a-zA-Z0~9]+([.][a-zA-Z]{2,}){1,2}/;
 	function emailCheck(){
 		$('#email').keyup(function(){
-			var regEmail = /^[a-z0-9][a-z0-9_-]*@[a-zA-Z0~9]+([.][a-zA-Z]{2,}){1,2}/;
 			if(!regEmail.test($('#email').val())){
 				$('#emailCheck').text('이메일을 확인해주세요.').css('color', 'red');
 				emailPass = false;
@@ -186,6 +202,10 @@
 	var verifyPass = false;
 	function getVerifyNum(){
 		$('#verify_num_btn').click(function(){
+			if(!regEmail.test($('#email').val())){
+				$('#emailCheck').text('이메일을입력하세요.').css('color', 'red');
+				return false;
+			}
 			$.ajax({
 				url: 'verifyNum.do',
 				type: 'get',
@@ -193,6 +213,7 @@
 				dataType: 'json',
 				success: function(resultMap){
 					alert('인증코드가 발송되었습니다.');
+					$('#emailCheck').text('인증코드를 입력해주세요.').css('color', 'red');
 					fn_verify(resultMap.authCode);  // 인증번호 검증 함수로 발행된 인증코드 전달
 					verifyPass = true;
 				},
@@ -209,9 +230,12 @@
 		$('#verify_btn').click(function(){
 			if(authCode == $('#user_key').val()){
 				alert('인증되었습니다.');
+				$('#emailCheck').text('');
+				$('#email_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 				authPass = true;
 			} else {
 				alert('인증에 실패했습니다.');
+				$('#email_i').html('<i></i>');
 				authPass = false;
 			}
 		});
@@ -223,20 +247,106 @@
 		$('#address').keyup(function(){
 			if($('#address').val() == ''){
 				$('#addressCheck').text('주소를 확인하세요.').css('color', 'red');
+				$('#address_i').html('<i></i>')
 				addressPass = false;
 			}else{
 				$('#addressCheck').text('주소가입력되었습니다.').css('color', 'green');
+				$('#addressCheck').text('');
+				$('#address_i').html('<i class="far fa-check-circle"></i>').css('color', '#b1c254');
 				addressPass = true;
 			}
 		});
 	}
 </script>
 <style>
+	*{
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+		background-color: beige;
+	}
+	.joinContainer{
+		width: 800px;
+		display: flex;
+		justify-content: center;
+	}
+	table{
+		margin-top: 20px;
+		border-collapse: collapse;
+	}
+	tr > td:nth-of-type(1){
+		width:20%;
+		text-align: center;
+	}
+	tr > td:nth-of-type(2){
+		width:75%;
+	}
+	tr > td:nth-of-type(3){
+		width:5%;
+		text-align: center;
+	}
 	.phone{
-		width: 100px;
+		width: 90px;
+		outline: none;
+	}
+	input, select{
+		padding: 10px;
+		border: none;
+		outline: none;
+		border-bottom: 1px solid #eed538;
+	}
+	#pw1, #pw2 , #name, #address{
+		width: 100%;
+	}
+	#id{
+		width: 59%;
+	}
+	#email, #user_key{
+		width: 59%;
+	}
+	#user_key{
+		margin-top: 5px;
+	}
+	i{
+		font-size: 18px;
+		color: #b1c254;
+	}
+	td > span {
+		 visibility: hidden;
+	}
+	.check{
+		height: 22px;
+		font-size: 12px;
+	}
+	.sub_btn{
+		width: 120px;
+        height: 40px;
+		line-height: 25px;
+		margin-top: 5px;
+		background-color: #f4e68f;
+		border: none;
+		font-weight: bolder;
+	}
+	.sub_btn:hover{
+		cursor: pointer;
+	}
+	#join_btn{
+		margin-top: 20px;
+        width: 400px;
+        height: 40px;
+        background-color: #eed538;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        font-weight: bolder;
+        font-size: 16px;
+	}
+	#join_btn:hover{
+		cursor: pointer;
+		background-color: #b1c254;
 	}
 </style>
-
+<div class="joinContainer">
 	<form id="f" method="post">
 		<table>
 			<thead>
@@ -244,38 +354,37 @@
 					<td>아이디</td>
 					<td>
 						<input type="text" name="id" id="id">
-						<input type="button" value="아이디 중복검사" id="id_btn">
+						<input type="button" value="아이디 중복검사" id="id_btn" class="sub_btn">
 					</td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td id="id_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="idCheck">
+					<td colspan="3" id="idCheck" class="check">
 					</td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
 					<td><input type="password" name="pw1" id="pw1"></td>
-					<td><i class="far fa-check-circle"></i></td>
-					
+					<td id="pw_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="pw1Check"></td>
+					<td colspan="3" id="pw1Check" class="check"></td>
 				</tr>
 				<tr>
-					<td>비밀번호 재확인</td>
+					<td>비밀번호<br>재확인</td>
 					<td><input type="password" id="pw2"></td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td id="pw2_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="pw2Check"></td>
+					<td colspan="3" id="pw2Check" class="check"></td>
 				</tr>
 				<tr>
 					<td>이름</td>
 					<td><input type="text" name="name" id="name"></td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td id="name_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="nameCheck"></td>
+					<td colspan="3" id="nameCheck" class="check"></td>
 				</tr>
 				<tr>
 					<td>전화번호</td>
@@ -287,32 +396,31 @@
 						</select> - 
 						<input type="text" name="phone2" id="phone2" class="phone" maxlength="4"> - 
 						<input type="text" name="phone3" id="phone3" class="phone" maxlength="4"></td>
-						<td><i class="far fa-check-circle"></i></td>
+						<td id="phone_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="phoneCheck"></td>
+					<td colspan="3" id="phoneCheck" class="check"></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
 					<td>
 						<input type="text" name="email" id="email">
-						<input type="button" value="인증번호받기" id="verify_num_btn"><br>
+						<input type="button" value="인증번호받기" id="verify_num_btn" class="sub_btn"><br>
 						<input type="text" id="user_key">
-						<input type="button" value="인증하기" id="verify_btn">
+						<input type="button" value="인증하기" id="verify_btn" class="sub_btn">
 					</td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td id="email_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="emailCheck"></td>
+					<td colspan="3" id="emailCheck" class="check"></td>
 				</tr>
 				<tr>
 					<td>주소</td>
 					<td><input type="text" name="address" id="address"></td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td id="address_i"></td>
 				</tr>
 				<tr>
-					<td colspan="3" id="addressCheck"></td>
-					<td><i class="far fa-check-circle"></i></td>
+					<td colspan="3" id="addressCheck" class="check"></td>
 				</tr>
 			</thead>
 			<tfoot>
@@ -324,5 +432,5 @@
 			</tfoot>
 		</table>
 	</form>
-	
+</div>
 <%@ include file="../layout/footer.jsp" %>

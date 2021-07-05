@@ -16,10 +16,25 @@
 		margin: auto;
 		text-align: center;
 	}
+	.img_box{
+		margin-top: 20px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+	.main_img{
+		width: 100%;
+		height: auto;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
 </style>
 	
 <div class="indexContainer">
-	여기는메인
+	<div class="img_box">
+		<img class="main_img" alt="메인 이미지" src="assets/images/main_image.jpg" >
+	</div>
 </div>
 	
 <%@ include file="layout/footer.jsp" %>

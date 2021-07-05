@@ -7,10 +7,6 @@
 </jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-	$(document).ready(function(){
-		login();
-	});
-
 </script>
 <style>
 	*{
@@ -116,7 +112,7 @@
 			<p>아이디는 ${id}입니다.</p>
 			<input type="button" value="로그인하기" class="login_btn" onclick="location.href='loginPage.do'">
 			<div class="findPw">
-		        <a href="findPw.do">비밀번호 찾기</a>
+		        <a href="findPwPage.do">비밀번호 찾기</a>
 		    </div>
 		</c:if>
 	</div>

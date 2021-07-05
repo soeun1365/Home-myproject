@@ -38,12 +38,17 @@ public class LoginCommand{
 		resultMap.put("loginUser", loginUser);
 		response.setContentType("text/html; charset=utf-8"); 
 		try {
-			if(loginUser == null) {
+			if(loginUser == null) {	
 				response.getWriter().println("<script>");
 				response.getWriter().println("alert('로그인에 실패하였습니다.')");
 				response.getWriter().println("history.back()");
 				response.getWriter().println("</script>");
-			} else if(loginUser != null) {
+			} else if(loginUser.getState() == 1){	//탈퇴 후 loginUser.state는 1로 변경되어있음
+				response.getWriter().println("<script>");
+				response.getWriter().println("alert('탈퇴한 회원입니다.')");
+				response.getWriter().println("history.back()");
+				response.getWriter().println("</script>");
+			}else if(loginUser != null) {
 				response.getWriter().println("<script>");
 				response.getWriter().println("alert('로그인에 성공하였습니다.')");
 				response.getWriter().println("location.href='index.do'");

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class GalleryComment {
-	private long cNo;
+	private long cno;
 	private String id;
 	private String content;
 	private Date postdate;

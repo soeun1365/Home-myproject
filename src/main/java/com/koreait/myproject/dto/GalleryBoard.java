@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class GalleryBoard {
-	private long gNo;
+	private long gno;
 	private String id;
 	private String title;
 	private String content;

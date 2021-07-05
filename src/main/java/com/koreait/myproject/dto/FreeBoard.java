@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class FreeBoard {
-	private long gNo;
+	private long fno;
 	private String id;
 	private String title;
 	private String content;
