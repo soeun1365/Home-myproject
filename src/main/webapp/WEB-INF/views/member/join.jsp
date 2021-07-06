@@ -41,7 +41,7 @@
 				alert('이름을 확인하세요.');
 				return false;
 			}else if(!phonePass){
-				alert('전화번호를 확인하세요.');   verifyPass = false
+				alert('전화번호를 확인하세요.'); 
 				return false;
 			}else if(!emailPass){
 				alert('이메일을 확인하세요.');	
@@ -198,14 +198,38 @@
 		});
 	}
 	
-	// 이메일 인증번호 받기
-	var verifyPass = false;
-	function getVerifyNum(){
+	/*
+	// 중복 이메일 확인
+	var doubleEmail = false;
+	function doubleEmail(){
 		$('#verify_num_btn').click(function(){
 			if(!regEmail.test($('#email').val())){
 				$('#emailCheck').text('이메일을입력하세요.').css('color', 'red');
 				return false;
+			}else{
+				$.ajax({
+					url: 'doubleEmail.do',
+					type: 'get',
+					data: 'email=' + $('#email').val(),
+					dataType: 'json',
+					success: function(resultMap){
+						if(resultMap.count > 0){
+							alert('이미가입된 아이디 입니다.');
+							doubleEmail = false;
+						}else{
+							doubleEmail = true;
+						}
+					}
+				});
 			}
+		}
+	}
+	*/
+	
+	// 이메일 인증번호 받기
+	var verifyPass = false;
+	function getVerifyNum(){
+		$('#verify_num_btn').click(function(){
 			$.ajax({
 				url: 'verifyNum.do',
 				type: 'get',

@@ -17,7 +17,7 @@
 				$('#pw').focus();
 				return false;
 			} else if($('#pw').val() != $('#UserPw').val()){
-				alert('비밀번호가 일치하지 않습니다.');
+				alert('비밀번호가 일치하지 않습니다. ');
 				return false;
 			} else{
 				$('#f').attr('action', 'accountWithdrawResult.do');
@@ -85,8 +85,6 @@
         </div>
     	<input type="hidden" name="mno" value="${loginUser.mno}">
     	<input type="hidden" value="${loginUser.pw}" id="UserPw">
-
-
     </form>
 </div>
     

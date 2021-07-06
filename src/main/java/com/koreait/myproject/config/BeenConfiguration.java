@@ -7,17 +7,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.koreait.myproject.command.AccountWithdrawResult;
-import com.koreait.myproject.command.EmailAuthCommand;
-import com.koreait.myproject.command.IdCheckCommand;
-import com.koreait.myproject.command.JoinCommand;
-import com.koreait.myproject.command.LoginCommand;
-import com.koreait.myproject.command.LogoutCommand;
-import com.koreait.myproject.command.ShowIdByEmailCommand;
-import com.koreait.myproject.command.ShowIdByNamePhone;
-import com.koreait.myproject.command.UpdatePwCommand;
-import com.koreait.myproject.command.VerifyEmailCommand;
+import com.koreait.myproject.command.member.AccountWithdrawResultCommand;
+import com.koreait.myproject.command.member.DoubleEmailCommand;
+import com.koreait.myproject.command.member.EmailAuthCommand;
+import com.koreait.myproject.command.member.IdCheckCommand;
+import com.koreait.myproject.command.member.JoinCommand;
+import com.koreait.myproject.command.member.LoginCommand;
+import com.koreait.myproject.command.member.LogoutCommand;
+import com.koreait.myproject.command.member.ShowIdByEmailCommand;
+import com.koreait.myproject.command.member.ShowIdByNamePhone;
+import com.koreait.myproject.command.member.UpdatePwCommand;
+import com.koreait.myproject.command.member.VerifyEmailCommand;
 
 @Configuration
 public class BeenConfiguration {
@@ -42,9 +44,14 @@ public class BeenConfiguration {
 	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}
+	// Member
 	@Bean
 	public IdCheckCommand idCheckCommand() {
 		return new IdCheckCommand();
+	}
+	@Bean
+	public DoubleEmailCommand doubleEmailCommand() {
+		return new DoubleEmailCommand();
 	}
 	@Bean
 	public JoinCommand joinCommand() {
@@ -79,7 +86,16 @@ public class BeenConfiguration {
 		return new UpdatePwCommand();
 	}
 	@Bean
-	public AccountWithdrawResult accountWithdrawResult() {
-		return new AccountWithdrawResult();
+	public AccountWithdrawResultCommand accountWithdrawResult() {
+		return new AccountWithdrawResultCommand();
 	}
+	// GalleryBoard
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+		multipartResolver.setDefaultEncoding("utf-8");
+		multipartResolver.setMaxUploadSize(1024 * 1024 * 10);  // 바이트 단위(10MB)
+		return multipartResolver;
+	}
+	
 }

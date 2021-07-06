@@ -1,5 +1,6 @@
 package com.koreait.myproject.dto;
 
+
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,6 @@ public class GalleryBoard {
 	private Date lastmodidate;
 	private String ip;
 	private int lookcount;
-	private String image;
+	private String filename;
 	
 }

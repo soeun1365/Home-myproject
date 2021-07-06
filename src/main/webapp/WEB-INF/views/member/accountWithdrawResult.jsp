@@ -28,18 +28,35 @@
         text-align: center;
 	}
 	p{
+		margin-top: 150px;
 		text-align: center;
+		font-size: 16px;
+		font-weight: bolder;
 	}
-   
+   	#goIndex_btn{
+   		margin-top: 100px;
+        width: 200px;
+        height: 40px;
+        background-color: #eed538;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        font-weight: bolder;
+        font-size: 16px;
+   	}
+   	#goIndex_btn:hover{
+   		cursor: pointer;
+		background-color: #b1c254;
+   	}
 </style>
 <div class="container">
 	<div class="result">
 		<p>
-			회원탈퇴가 완료되었습니다.
-			그동안 이용해주셔서 감사합니다.
-			보다 나은 서비스로 찾아 뵙겠습니다.
+			회원탈퇴가 완료되었습니다.<br>
+			그동안 이용해주셔서 감사합니다.<br>
+			보다 나은 서비스로 찾아 뵙겠습니다.<br>
+			<input type="button" value="첫화면으로 가기" id="goIndex_btn" onclick="location.href='index.do'">
 		</p>
-		<input type="button" value="첫화면으로 가기" id="goIndex_btn" onclick="location.href='index.do'">
 	</div>
 </div>
 

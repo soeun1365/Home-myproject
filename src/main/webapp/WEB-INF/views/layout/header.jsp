@@ -56,7 +56,6 @@
 		height: 52px;
 		list-style: none;
 		padding-left: 0;
-		background-color: #b1c254;
 		border-top: 1px solid #eed538;
         border-bottom: 1px solid #eed538;
         display: flex;
@@ -66,14 +65,12 @@
 		width: 30%;
 		height: 50px;
 		display: inline-block;
-		background-color: #b1c254;
 	}
 	li a{
         display: block;
         line-height: 50px;
         text-align: center;
 		text-decoration: none;
-		background-color: #b1c254;
         font-weight: bold;
         font-size: 16px;
 		color: black;
@@ -101,8 +98,7 @@
 			<img src="">
 		</a>
 		<div class="logo_name">
-			<h1><a href="index.do">키.사.모</a></h1>
-			<p>키위를 사랑하는 모임</p>
+			<h1><a href="index.do">KIWI</a></h1>
 		</div>
 		<div class="member_info">
 			<c:if test="${loginUser == null}">
@@ -117,8 +113,8 @@
 		</div>
 	<nav>
 		<ul class="nav">
-            <li><a href="galaryPage.do">갤러리</a></li>
-			<li><a href="freePage.do">자유게시판</a></li>
+            <li><a href="galaryBoardPage.do">갤러리 게시판</a></li>
+			<li><a href="freeBoardPage.do">자유 게시판</a></li>
 		</ul>
 	</nav>
 	</header>

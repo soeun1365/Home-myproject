@@ -2,7 +2,6 @@ package com.koreait.myproject.controller;
 
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,16 +16,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.koreait.myproject.command.AccountWithdrawResult;
-import com.koreait.myproject.command.EmailAuthCommand;
-import com.koreait.myproject.command.IdCheckCommand;
-import com.koreait.myproject.command.JoinCommand;
-import com.koreait.myproject.command.LoginCommand;
-import com.koreait.myproject.command.LogoutCommand;
-import com.koreait.myproject.command.ShowIdByEmailCommand;
-import com.koreait.myproject.command.ShowIdByNamePhone;
-import com.koreait.myproject.command.UpdatePwCommand;
-import com.koreait.myproject.command.VerifyEmailCommand;
+import com.koreait.myproject.command.member.AccountWithdrawResultCommand;
+import com.koreait.myproject.command.member.DoubleEmailCommand;
+import com.koreait.myproject.command.member.EmailAuthCommand;
+import com.koreait.myproject.command.member.IdCheckCommand;
+import com.koreait.myproject.command.member.JoinCommand;
+import com.koreait.myproject.command.member.LoginCommand;
+import com.koreait.myproject.command.member.LogoutCommand;
+import com.koreait.myproject.command.member.ShowIdByEmailCommand;
+import com.koreait.myproject.command.member.ShowIdByNamePhone;
+import com.koreait.myproject.command.member.UpdatePwCommand;
+import com.koreait.myproject.command.member.VerifyEmailCommand;
 
 @org.springframework.stereotype.Controller
 public class MemberController {
@@ -44,8 +44,9 @@ public class MemberController {
 	private ShowIdByEmailCommand showIdByEmailCommand;
 	private ShowIdByNamePhone showIdByNamePhone;
 	private UpdatePwCommand updatePwCommand;
-	private AccountWithdrawResult accountWithdrawResult;
+	private AccountWithdrawResultCommand accountWithdrawResult;
 	private VerifyEmailCommand verifyEmailCommand;
+	private DoubleEmailCommand doubleEmailCommand;
 	
 	//constructor
 	@Autowired
@@ -58,8 +59,9 @@ public class MemberController {
 							ShowIdByEmailCommand showIdByEmailCommand,
 							ShowIdByNamePhone showIdByNamePhone,
 							UpdatePwCommand updatePwCommand,
-							AccountWithdrawResult accountWithdrawResult,
-							VerifyEmailCommand verifyEmailCommand) {
+							AccountWithdrawResultCommand accountWithdrawResult,
+							VerifyEmailCommand verifyEmailCommand,
+							DoubleEmailCommand doubleEmailCommand) {
 		super();
 		this.sqlSession = sqlSession;
 		this.idCheckCommand = idCheckCommand;
@@ -72,6 +74,7 @@ public class MemberController {
 		this.updatePwCommand = updatePwCommand;
 		this.accountWithdrawResult = accountWithdrawResult;
 		this.verifyEmailCommand = verifyEmailCommand;
+		this.doubleEmailCommand = doubleEmailCommand;
 	}
 
 	@GetMapping(value= {"/", "index.do"})
@@ -100,6 +103,15 @@ public class MemberController {
 		logger.info("idCheck()");
 		model.addAttribute("request", request);
 		return idCheckCommand.execute(sqlSession, model);
+	}
+	@GetMapping(value="doubleEmail",
+				produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> doubleEmail(HttpServletRequest request,
+										   Model model){
+		logger.info("doubleEmail()");
+		model.addAttribute("request", request);
+		return doubleEmailCommand.execute(sqlSession, model);
 	}
 	
 	@PostMapping(value="join.do")
@@ -215,14 +227,13 @@ public class MemberController {
 	@PostMapping(value="accountWithdrawResult.do")
 	public String accountWithdrawResult(HttpServletRequest request,
 										HttpServletResponse response,
-										Session session,
+										HttpSession session,
 										Model model) {
 		logger.info("accountWithdrawResult()");
 		model.addAttribute("request", request);
 		model.addAttribute("response", response);
 		model.addAttribute("session", session);
 		accountWithdrawResult.execute(sqlSession, model);
-		//logoutCommand.execute(sqlSession, model);	//로그인정보 없애기 loginUser 세션에서 삭제
 		return "member/accountWithdrawResult";
 	}
 }

@@ -3,12 +3,19 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.koreait.myproject.dao.MyProjectDAO">
+<mapper namespace="com.koreait.myproject.dao.MemberDAO">
 
 	<select id="idCheck" resultType="int" >
 		SELECT COUNT(ID)
 		  FROM MEMBER
 		 WHERE ID = #{id}
+	</select>
+	
+	<select id="doubleEmail" resultType="int">
+		SELECT COUNT(EMAIL)
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+		   AND STATE = 0
 	</select>
 	
 	<insert id="join">
@@ -17,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="login" resultType="com.koreait.myproject.dto.Member">
-		SELECT MNO ID, PW, NAME, PHONE, EMAIL, ADDRESS, REGDATE, STATE
+		SELECT MNO, ID, PW, NAME, PHONE, EMAIL, ADDRESS, REGDATE, STATE
 		  FROM MEMBER
 		 WHERE ID = #{id}
 		   AND PW = #{pw}		
@@ -53,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="accountWithdraw">
 		UPDATE MEMBER
 		   SET STATE = 1
-		 WHERE MNO = ${mno}
+		 WHERE ID = #{id}
 	</update>
 	
 </mapper>
